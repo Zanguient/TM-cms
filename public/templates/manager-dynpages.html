@@ -1,6 +1,6 @@
 <div class="filter">
     <div class="container">
-
+        <nav class="buttons"><a class="exec" name="save" id="save"><i class="fa fa-plus-circle"></i><span>@(Save)</span></a></nav>
         <div class="caption"><span class="fa fa-table mr5"></span> @(Dynpages)</div>
         <div class="row">
             <div class="col-md-3 m">
@@ -123,6 +123,9 @@
             self.make = function () {
                 var builder = [];
                 var attrs = [];
+                var loading = FIND('loading').show();
+
+                var save = document.getElementById('save');
 
                 attrs.attr('id', self.attr('data-jc-id'));
 
@@ -180,6 +183,26 @@
                         for (var i = 0; i < logicalRows.length; i++)
                             dynpage_remove(dynpages.data[i].id);
                     }
+                });
+
+                Handsontable.Dom.addEvent(save, 'click', function () {
+                    // save all cell's data
+
+                    AJAX('PUT {0}/api/dynpages/'.format(managerurl), hot.getSourceData(), function (response) {
+
+                        loading.hide(500);
+
+                        // Error prevention
+                        if (response instanceof Array && response.length && response[0].error) {
+                            FIND('message').warning(response[0].error);
+                            return;
+                        }
+
+                        hot.loadData(response.items);
+
+                        success();
+                    });
+
                 });
 
                 dynpages_refresh(true);

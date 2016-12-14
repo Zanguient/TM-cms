@@ -94,7 +94,7 @@ NEWSCHEMA('Page').make(function(schema) {
                     //options.language && dyna.where('language', options.language);
 
                     return dyna.callback(function(err, dynItem){
-                        //console.log(err, doc);
+                        //console.log(err, dynItem);
                         !dynItem && error.push('error-404-page');
                         if(!dynItem)
                             return callback(dynItem);

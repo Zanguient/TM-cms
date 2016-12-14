@@ -40,6 +40,7 @@ exports.install = function() {
         // DYNPAGES
         F.route(url + '/api/dynpages/',            json_query, ['*Dynpage']);
         F.route(url + '/api/dynpages/',            json_dynpages_save, ['post', '*Dynpage'], 512);
+        F.route(url + '/api/dynpages/',            json_dynpages_savemany, ['put','json'], 512);
         F.route(url + '/api/dynpages/',            json_remove, ['delete', '*Dynpage']);
 
 	// WIDGETS
@@ -327,12 +328,22 @@ function json_pages_stats(id) {
 // DYNAMIC TABLE PAGES
 // ==========================================================================
 
-// Saves (update or create) dynamic table
+// Saves (update or create) one dynamic table
 function json_dynpages_save() {
 	var self = this;
 
 	// Is auto-creating URL?
 	self.body.$save(self, self.callback());
+
+	// Clears view cache
+	setTimeout(() => F.cache.removeAll('cache.'), 2000);
+}
+
+// Saves (update or create) many dynamic table
+function json_dynpages_savemany() {
+	var self = this;
+        
+        GETSCHEMA('Dynpage').workflow2('updateAll', self.body, self.callback());
 
 	// Clears view cache
 	setTimeout(() => F.cache.removeAll('cache.'), 2000);

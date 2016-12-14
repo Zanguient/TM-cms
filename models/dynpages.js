@@ -1,3 +1,7 @@
+"use strict";
+
+var async = require('async');
+
 NEWSCHEMA('Dynpage').make(function (schema) {
 
     schema.define('id', 'String(20)');
@@ -119,4 +123,31 @@ NEWSCHEMA('Dynpage').make(function (schema) {
         callback(model);
         F.emit('dynpages.save', model);
     });
+
+    schema.addWorkflow('updateAll', function (error, model, options, callback) {
+
+        var schema = GETSCHEMA('Dynpage');
+        var result = [];
+
+        async.each(options, function (elem, cb) {
+            //console.log(elem);
+            if (!elem.title)
+                return cb();
+
+            schema.make(elem, function (err, model) {
+                if (err)
+                    return console.log(err);
+                
+                result.push(model);
+
+                model.$save(null, cb());
+            });
+        }, function () {
+                callback({
+                    count : result.length,
+                    items : result
+                });
+        });
+    });
+
 });

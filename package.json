@@ -4,7 +4,8 @@
   "version": "4.1.0",
   "main": "release.js",
   "dependencies": {
-    "total.js": "latest"
+    "total.js" : "latest",
+    "async" : "latest"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

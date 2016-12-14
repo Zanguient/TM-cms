@@ -10,7 +10,7 @@ exports.install = function() {
 	F.route('#blogsdetail',      view_blogs_detail, ['*Post']);
 
 	// FILES
-    F.file('sitemap.xml', file_xml);
+        F.file('sitemap.xml', file_xml);
 	F.file('/download/', file_read);
 };
 
