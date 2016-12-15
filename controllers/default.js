@@ -3,7 +3,7 @@ var isGenerated = false;
 exports.install = function() {
 	// CMS rendering
 	F.route('/*', view_page);
-	F.route('/demo/');
+	F.route('#sitemap', view_sitemap);
 
 	// POSTS
 	F.route('#blogs',            view_blogs, ['*Post']);
@@ -166,7 +166,7 @@ function file_xml(req, res, validation) {
     isGenerating = true;
 
     options.sitemap = F.global.sitemap;
-    //console.log(arr);
+    //console.log(options.sitemap);
 
 
     console.log('sitemap.xml -> creating');
@@ -186,4 +186,10 @@ function file_xml(req, res, validation) {
         res.continue();
     });
 
+}
+
+function view_sitemap() {
+    var self = this;
+    
+    self.view('sitemap', F.global.sitemap);
 }
