@@ -1,0 +1,7 @@
+<section id="page-title">
+    <div class="container clearfix">
+        <h1>@{model.settings[0] || model.page.title}</h1>
+        <span>@{model.settings[1]}</span>
+        <ol class="breadcrumb">@{foreach m in model.page.breadcrumb}<li class="@{if m.last}active@{fi}"><a href="@{m.url}">@{m.name}</a></li>@{end}</ol>
+    </div>
+</section>
