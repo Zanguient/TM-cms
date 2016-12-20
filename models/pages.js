@@ -426,7 +426,7 @@ function refresh() {
 		});
 
                 Object.keys(navigation.mainmenu).forEach(function(key) {
-                        console.log(key);
+                        //console.log(key);
 			var parent = navigation.mainmenu[key].parent;
 			if (parent)
 				navigation.mainmenu[key].parent = link_parent[parent];
@@ -440,7 +440,7 @@ function refresh() {
 		F.global.navigations = navigation;
                 for(var i=0,len=navigation.mainmenu.length;i<len;i++) {
                     var elem = navigation.mainmenu[i];
-                    console.log(elem);
+                    //console.log(elem);
                     
                     if(elem.noIndex)
                         continue;
