@@ -42,6 +42,7 @@ exports.install = function() {
         F.route(url + '/api/dynpages/',            json_dynpages_save, ['post', '*Dynpage'], 512);
         F.route(url + '/api/dynpages/',            json_dynpages_savemany, ['put','json'], 512);
         F.route(url + '/api/dynpages/',            json_remove, ['delete', '*Dynpage']);
+        F.route(url + '/dynpages/export/',         file_dynpages, ['*Dynpage']);
 
 	// WIDGETS
 	F.route(url + '/api/widgets/',             json_query, ['*Widget']);
@@ -347,6 +348,12 @@ function json_dynpages_savemany() {
 
 	// Clears view cache
 	setTimeout(() => F.cache.removeAll('cache.'), 2000);
+}
+
+// Downloads all email address as CSV
+function file_dynpages() {
+	var self = this;
+	self.$workflow('download', self);
 }
 
 // ==========================================================================

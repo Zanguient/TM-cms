@@ -1,6 +1,7 @@
 <div class="filter">
     <div class="container">
         <nav class="buttons"><a class="exec" name="save" id="save"><i class="fa fa-plus-circle"></i><span>@(Save)</span></a></nav>
+        <nav class="buttons"><a href="javascript:void(0)" class="csvexport"><i class="fa fa-table"></i><span>@(Download)</span></a></nav>
         <div class="caption"><span class="fa fa-table mr5"></span> @(Dynpages)</div>
         <div class="row">
             <div class="col-md-3 m">
@@ -111,10 +112,7 @@
             {title: "title", sitemap: "title", url: "/"}
         ];
 
-        //AJAX('GET {0}/api/dynpages/'.format(managerurl), {}, function (response) {
-        //    console.log(response);
-        //});
-
+        $('.csvexport').attr('href', '{0}/dynpages/export/'.format(managerurl));
 
         COMPONENT('handsontable', function () {
             var self = this;

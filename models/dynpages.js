@@ -149,5 +149,31 @@ NEWSCHEMA('Dynpage').make(function (schema) {
                 });
         });
     });
+    
+    // Performs download
+	schema.addWorkflow('download', function(error, model, controller, callback) {
+		NOSQL('dynpages').find().callback(function(err, response) {
+                        var builder = [];
+                        var header = ['id', 'title', 'sitemap', 'url', 'pageId', 'keywords', 'var1', 'var2', 'var3','var4'];
+
+                        var out = '"' + header[0] + '"';
+                        for (var i = 1, length = header.length; i < length; i++)
+                            out += ";" + '"' + header[i] + '"';
+                        
+                        
+                        builder.push(out);
+
+			for (var i = 0, length = response.length; i < length; i++) {
+                            var out = '"' +response[header[0]] + '"';
+                            for (var j = 1, length = header.length; j < length; j++) 
+                                out += ";" + '"' + header[j] + '"';
+                        
+                            builder.push(out);
+                        }
+
+			controller.content(builder.join('\n'), U.getContentType('csv'), { 'Content-Disposition': 'attachment; filename="dynpage.csv"' });
+			callback();
+		});
+	});
 
 });
