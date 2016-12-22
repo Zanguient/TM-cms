@@ -448,7 +448,7 @@ function refresh() {
                     if(elem.url === '/')
                         home = elem.name;
                     //if(elem.url !== "/" && elem.url !== '/blogs/')
-                        F.sitemap_add(elem.name + '       : '+elem.title+'      --> '+elem.url+'  --> '+elem.parent);
+                        F.sitemap_add(elem.name + '       : '+elem.sitemap+'      --> '+elem.url+'  --> '+elem.parent);
                 }
                 
                 NOSQL('dynpages').find().callback(function(err,docs){
