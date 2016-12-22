@@ -2,6 +2,5 @@ tmp/*
 logs/*
 /nbproject/
 /node_modules/
-public/sitemap.xml
 config
 *.cache
