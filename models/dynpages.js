@@ -41,7 +41,7 @@ NEWSCHEMA('Dynpage').make(function (schema) {
         filter.sort('sitemap');
 
         filter.callback(function (err, docs, count) {
-            console.log(docs);
+            //console.log(docs);
             var data = {};
             data.count = count;
             data.items = docs;
@@ -152,7 +152,10 @@ NEWSCHEMA('Dynpage').make(function (schema) {
     
     // Performs download
 	schema.addWorkflow('download', function(error, model, controller, callback) {
-		NOSQL('dynpages').find().callback(function(err, response) {
+		NOSQL('dynpages')
+                        .find()
+                        .fields('id', 'title', 'sitemap', 'url', 'pageId', 'keywords', 'var')
+                        .callback(function(err, response) {
                         var builder = [];
                         var header = ['id', 'title', 'sitemap', 'url', 'pageId', 'keywords', 'var1', 'var2', 'var3','var4'];
 
@@ -164,10 +167,14 @@ NEWSCHEMA('Dynpage').make(function (schema) {
                         builder.push(out);
 
 			for (var i = 0, length = response.length; i < length; i++) {
-                            var out = '"' +response[header[0]] + '"';
-                            for (var j = 1, length = header.length; j < length; j++) 
-                                out += ";" + '"' + header[j] + '"';
-                        
+                            var out = '"' +response[i][header[0]] + '"';
+                            for (var j = 1, len = header.length; j < len; j++) {
+                                if(header[j].substring(0,3) == 'var')
+                                    out += ";" + '"' + response[i].var[parseInt(header[j].substr(3))] + '"';
+                                else
+                                    out += ";" + '"' + response[i][header[j]] + '"';
+                            }
+                            
                             builder.push(out);
                         }
 
