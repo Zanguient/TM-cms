@@ -37,13 +37,17 @@ exports.install = function() {
 	F.route(url + '/api/pages/preview/',       view_pages_preview, ['json'], 512);
 	F.route(url + '/api/pages/dependencies/',  json_pages_dependencies);
 	F.route(url + '/api/pages/sitemap/',       json_pages_sitemap);
+        
         // DYNPAGES
         F.route(url + '/api/dynpages/',            json_query, ['*Dynpage']);
+        F.route(url + '/api/dynpages/',            json_remove, ['delete', '*Dynpage']);
+        F.route(url + '/api/dynpages/upload',      upload_dynpages, ['post', 'upload', 10000], 10240); // 10 MB
+        F.route(url + '/api/dynpages/export/',     file_dynpages, ['*Dynpage']);
+        F.route(url + '/api/dynpages/{id}/',       json_read, ['*Dynpage']);
         F.route(url + '/api/dynpages/',            json_dynpages_save, ['post', '*Dynpage'], 512);
         F.route(url + '/api/dynpages/',            json_dynpages_savemany, ['put','json'], 512);
         F.route(url + '/api/dynpages/',            json_remove, ['delete', '*Dynpage']);
-        F.route(url + '/dynpages/export/',         file_dynpages, ['*Dynpage']);
-
+        
 	// WIDGETS
 	F.route(url + '/api/widgets/',             json_query, ['*Widget']);
 	F.route(url + '/api/widgets/',             json_save,   ['post', '*Widget']);
@@ -354,6 +358,59 @@ function json_dynpages_savemany() {
 function file_dynpages() {
 	var self = this;
 	self.$workflow('download', self);
+}
+
+// Upload (multiple) pictures
+function upload_dynpages() {
+        var csv = require('csv');
+
+	var self = this;
+	var id = [];
+
+	if (self.files.length > 0) {
+            //console.log(self.files[0].filename);
+
+            var tab = [];
+
+            csv()
+                    .from.path(self.files[0].path, {
+                        delimiter: ';',
+                        escape: '"'
+                    })
+                    .transform(function (row, index, callback) {
+                        if (index === 0) {
+                            tab = row; // Save header line
+                            return callback();
+                        }
+                        //console.log(tab);
+                        //console.log(row);
+
+                        //console.log(row[0]);
+
+                        GETSCHEMA('Dynpage').make({
+                            id:row[0],
+                            title : row[1],
+                            sitemap : row[2],
+                            url : row[3],
+                            pageId : row[4],
+                            keywords : row[5],
+                            var : ['', row[6], row[7], row[8], row[9]]
+                        }).$save(callback);
+                    })
+                    .on("end", function (count) {
+                        //console.log('Number of lines: ' + count);
+                        /*fs.unlink(self.files[0].path, function(err) {
+                         if (err)
+                         console.log(err);
+                         });*/
+                        return self.json({
+                            count: count
+                        });
+                    })
+                    .on('error', function (error) {
+                        console.log(error.message);
+                    });
+        }			
 }
 
 // ==========================================================================

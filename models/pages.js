@@ -79,7 +79,6 @@ NEWSCHEMA('Page').make(function(schema) {
 
 	// Gets a specific page
 	schema.setGet(function(error, model, options, callback) {
-            
                 // Check if dynamic pages
                 var url = options.url && options.url.split('/');
                 if(url)
@@ -124,7 +123,6 @@ NEWSCHEMA('Page').make(function(schema) {
                     });
                     
                 }
-                    
 
 		var filter = NOSQL('pages').one();
 
@@ -412,7 +410,7 @@ function refresh() {
 			var name = doc.navigations[i];
 			if (!navigation[name])
 				navigation[name] = [];
-			navigation[name].push({ url: doc.url, name: doc.name, title: doc.title, priority: doc.priority, parent: doc.parent, language: doc.language, icon: doc.icon, tags: doc.tags, noIndex : doc.isnoindex, external: doc.url.match(/(https|http)\:\/\//) != null });
+			navigation[name].push({ url: doc.url, name: doc.name, title: doc.title, priority: doc.priority, language: doc.language, icon: doc.icon, tags: doc.tags, noIndex : doc.isnoindex, external: doc.url.match(/(https|http)\:\/\//) != null });
 		}
 	};
 
@@ -431,7 +429,6 @@ function refresh() {
 			if (parent)
 				navigation.mainmenu[key].parent = link_parent[parent];
 		});
-
 		// Sorts navigation according to priority
 		Object.keys(navigation).forEach((name) => navigation[name].orderBy('priority', false));
 		partial.orderBy('priority', false);
@@ -467,20 +464,20 @@ function refresh() {
                     //console.log(sitemap);
 		F.global.partial = partial;
 		F.cache.removeAll('cache.');
-                });
+	});
 	});
 }
 
 // Creates Controller.prototype.page()
 F.eval(function() {
 
-	Controller.prototype.render = function(url, view, model, cache) {
+	Controller.prototype.render = function(url, callback, view, model, cache) {
 		var self = this;
 		var key = (self.language ? self.language + ':' : '') + url;
 		var page = F.global.sitemap[key];
 
 		if (page)
-			self.page(self.url, view, model, cache);
+			self.page(self.url, callback, view, model, cache);
 		else if(self.url === '/') {
                     self.redirect('/fr/'); // redirect to default page fr
                     //self.plain("toto");
@@ -502,9 +499,16 @@ F.eval(function() {
 		return self;
 	};
 
-	Controller.prototype.page = function(url, view, model, cache, partial) {
-
+	Controller.prototype.page = function(url, callback, view, model, cache, partial) {
 		var self = this;
+
+		if (typeof(callback) !== 'function') {
+			partial = cache;
+			cache = model;
+			model = view;
+			view = callback;
+			callback = undefined;
+		}
 		var tv = typeof(view);
 
 		if (tv === 'object') {
@@ -563,6 +567,9 @@ F.eval(function() {
 
 				self.sitemap(response.breadcrumb);
 				self.meta(response.title, response.perex || response.description, response.keywords);
+
+				F.emit('pages.render', response, self);
+				callback && callback.call(self, response);
 				self.view(view || '~/cms/' + response.template, model);
 			});
 

@@ -14,40 +14,42 @@ NEWSCHEMA('Dynpage').make(function (schema) {
     schema.define('parent', 'String(20)');              // Parent page for breadcrumb
     schema.define('language', 'Lower(2)');              // For which language is the page targeted?
     schema.define('var', '[String(200)]');
+    schema.define('search', 'String(1000)');            // Search pharses
 
     // Gets listing
     schema.setQuery(function (error, options, callback) {
 
-        //options.page = U.parseInt(options.page) - 1;
-        //options.max = U.parseInt(options.max, 20);
+        options.page = U.parseInt(options.page) - 1;
+        options.max = U.parseInt(options.max, 20);
 
-        //if (options.page < 0)
-        //    options.page = 0;
+        if (options.page < 0)
+            options.page = 0;
 
-        //var take = U.parseInt(options.max);
-        //var skip = U.parseInt(options.page * options.max);
+        var take = U.parseInt(options.max);
+        var skip = U.parseInt(options.page * options.max);
         var filter = NOSQL('dynpages').find();
 
-        //if (options.category)
-        //    options.category = options.category.slug();
+        if (options.category)
+            options.category = options.category.slug();
 
-        //options.language && filter.where('language', options.language);
-        //options.category && filter.where('category_linker', options.category);
-        //options.search && filter.like('search', options.search.keywords(true, true));
+        options.language && filter.where('language', options.language);
+        options.category && filter.where('category_linker', options.category);
+        options.search && filter.like('search', options.search.keywords(true, true));
 
-        //filter.take(take);
-        //filter.skip(skip);
+        filter.take(take);
+        filter.skip(skip);
+        filter.fields('id', 'title', 'url', 'language', 'icon', 'pageId', 'sitemap');
         //filter.fields('id', 'category', 'name', 'language', 'datecreated', 'linker', 'category_linker', 'pictures', 'perex', 'tags');
-        filter.sort('sitemap');
+        filter.sort('title', true);
 
         filter.callback(function (err, docs, count) {
             //console.log(docs);
             var data = {};
             data.count = count;
             data.items = docs;
-            //data.limit = options.max;
-            //data.pages = Math.ceil(data.count / options.max) || 1;
-            //data.page = options.page + 1;
+            data.limit = options.max;
+            data.pages = Math.ceil(data.count / options.max) || 1;
+            data.page = options.page + 1;
 
             callback(data);
         });
@@ -61,17 +63,13 @@ NEWSCHEMA('Dynpage').make(function (schema) {
 
         var filter = NOSQL('dynpages').one();
 
-        console.log(options);
-        //options.category && filter.where('category_linker', options.category);
+        options.category && filter.where('category_linker', options.category);
         options.linker && filter.where('linker', options.linker);
         options.id && filter.where('id', options.id);
         options.language && filter.where('language', options.language);
         options.template && filter.where('template', options.template);
 
-        filter.callback(function (item) {
-            return console.log(item);
-            //callback
-        }, 'error-404-post');
+        filter.callback(callback, 'error-404-post');
     });
 
     // Removes a specific page
@@ -118,6 +116,7 @@ NEWSCHEMA('Dynpage').make(function (schema) {
         url += '/';
 
         model.url = url;
+        model.search = ((model.title || '') + ' ' + (model.sitemap || '') + ' ' + (model.var || '') + ' ' + model.search).keywords(true, true).join(' ').max(1000);
 
         (newbie ? nosql.insert(model.$clean()) : nosql.modify(model).where('id', model.id));
         callback(model);
