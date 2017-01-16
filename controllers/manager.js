@@ -365,7 +365,7 @@ function file_dynpages() {
 // Upload (multiple) pictures
 function upload_dynpages() {
         var csv = require('csv');
-        var iconv = new Iconv('UTF-8', 'ISO-8859-1');
+        var iconv = new Iconv('ISO-8859-1', 'UTF-8');
 
 	var self = this;
 	var id = [];
@@ -391,13 +391,13 @@ function upload_dynpages() {
                         //console.log(row[0]);
 
                         GETSCHEMA('Dynpage').make({
-                            id:iconv.decode(row[0]),
-                            title : iconv.decode(row[1]),
-                            sitemap : iconv.decode(row[2]),
-                            url : iconv.decode(row[3]),
-                            pageId : iconv.decode(row[4]),
-                            keywords : iconv.decode(row[5]),
-                            var : ['', iconv.decode(row[6]), iconv.decode(row[7]), iconv.decode(row[8]), iconv.decode(row[9])]
+                            id:iconv.convert(row[0]),
+                            title : iconv.convert(row[1]),
+                            sitemap : iconv.convert(row[2]),
+                            url : iconv.convert(row[3]),
+                            pageId : iconv.convert(row[4]),
+                            keywords : iconv.convert(row[5]),
+                            var : ['', iconv.convert(row[6]), iconv.convert(row[7]), iconv.convert(row[8]), iconv.convert(row[9])]
                         }).$save(callback);
                     })
                     .on("end", function (count) {
