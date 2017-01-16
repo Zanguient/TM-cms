@@ -67,17 +67,17 @@
             </fieldset>
             <br/>
             <fieldset>
-                <legend>Description</legend>
+                <legend>Variables</legend>
 
-                <div style="width: 445px; ">
-                    <div style="float: right; text-align: right;">
-                        <div class="var" data-jc="textbox" data-jc-path="dynpages.form.var" data-maxlength="40" data-icon="fa-user" data-required="true"><label>@(Var2)</label></div>               
-                        <div class="var" data-jc="textbox" data-component="repeater" data-component-path="dynpages.form.var.last()" data-maxlength="40" data-icon="fa-user" data-required="true"><label>@(Var4)</label></div>
+                <div class="row">
+                    <div class="col-md-6 m">
+                        <div class="var" data-jc="textbox" data-jc-path="dynpages.form.var[1]" data-maxlength="40" data-icon="fa-user" data-required="true"><label>@(Var1)</label></div>
+                        <div class="var" data-jc="textbox" data-jc-path="dynpages.form.var[3]" data-maxlength="40" data-icon="fa-user" data-required="true"><label>@(Var3)</label></div>
                     </div>
-
-                    <div class="var" data-jc="textbox" data-component="repeater" data-component-path="dynpages.form.var" data-maxlength="40" data-icon="fa-user" data-required="true"><label>@(Var1)</label></div>
-                    <div class="var" data-jc="textbox" data-component="repeater" data-component-path="dynpages.form.var" data-maxlength="40" data-icon="fa-user" data-required="true"><label>@(Var3)</label></div>
-
+                    <div class="col-md-6 m">
+                        <div class="var" data-jc="textbox" data-jc-path="dynpages.form.var[2]" data-maxlength="40" data-icon="fa-user" data-required="true"><label>@(Var2)</label></div>               
+                        <div class="var" data-jc="textbox" data-jc-path="dynpages.form.var[4]" data-maxlength="40" data-icon="fa-user" data-required="true"><label>@(Var4)</label></div>
+                    </div>
                 </div>
 
             </fieldset>
@@ -101,7 +101,9 @@
         dynpages.filter = {};
         dynpages.filter.page = 1;
         dynpages.grid = {};
-        dynpages.form = {};
+        dynpages.form = {
+            var:[]
+        };
         dynpages.categories = [];
         dynpages.templates = [];
         dynpages.response = null;
