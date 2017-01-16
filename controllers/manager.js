@@ -365,7 +365,7 @@ function file_dynpages() {
 // Upload (multiple) pictures
 function upload_dynpages() {
         var csv = require('csv');
-        var iconv = new Iconv('ISO-8859-1', 'UTF-8');
+        var iconv = new Iconv('latin1', 'utf-8');
 
 	var self = this;
 	var id = [];
@@ -374,9 +374,22 @@ function upload_dynpages() {
             //console.log(self.files[0].filename);
 
             var tab = [];
+            
+            require('fs').readFile(self.files[0].path, function(err, buffer) {
+
+				if (err) {
+					error.push(err);
+					return callback();
+				}
+                                
+                                buffer = iconv.convert(buffer);
+				buffer = buffer.toString('utf8');
+                                
+                                //console.log(buffer);
+                                //buffer.split('\n');
 
             csv()
-                    .from.path(self.files[0].path, {
+                    .from.string(buffer, {
                         delimiter: ';',
                         escape: '"'
                     })
@@ -391,13 +404,13 @@ function upload_dynpages() {
                         //console.log(row[0]);
 
                         GETSCHEMA('Dynpage').make({
-                            id:iconv.convert(row[0]),
-                            title : iconv.convert(row[1]),
-                            sitemap : iconv.convert(row[2]),
-                            url : iconv.convert(row[3]),
-                            pageId : iconv.convert(row[4]),
-                            keywords : iconv.convert(row[5]),
-                            var : ['', iconv.convert(row[6]), iconv.convert(row[7]), iconv.convert(row[8]), iconv.convert(row[9])]
+                            id:row[0],
+                            title : row[1],
+                            sitemap : row[2],
+                            url : row[3],
+                            pageId : row[4],
+                            keywords : row[5],
+                            var : ['', row[6], row[7], row[8], row[9]]
                         }).$save(callback);
                     })
                     .on("end", function (count) {
@@ -413,6 +426,7 @@ function upload_dynpages() {
                     .on('error', function (error) {
                         console.log(error.message);
                     });
+                });
         }			
 }
 
