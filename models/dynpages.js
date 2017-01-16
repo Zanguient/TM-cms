@@ -1,6 +1,7 @@
 "use strict";
 
-var async = require('async');
+var async = require('async'),
+       Iconv = require('iconv').Iconv;
 
 NEWSCHEMA('Dynpage').make(function (schema) {
 
@@ -151,6 +152,8 @@ NEWSCHEMA('Dynpage').make(function (schema) {
     
     // Performs download
 	schema.addWorkflow('download', function(error, model, controller, callback) {
+            var iconv = new Iconv('UTF-8', 'ISO-8859-1');
+            
 		NOSQL('dynpages')
                         .find()
                         .fields('id', 'title', 'sitemap', 'url', 'pageId', 'keywords', 'var')
@@ -176,8 +179,11 @@ NEWSCHEMA('Dynpage').make(function (schema) {
                             
                             builder.push(out);
                         }
+                        
+                        var txt = builder.join('\n');
+                        txt = iconv.convert(txt);
 
-			controller.content(builder.join('\n'), U.getContentType('csv'), { 'Content-Disposition': 'attachment; filename="dynpage.csv"' });
+			controller.content(txt, U.getContentType('csv'), { 'Content-Disposition': 'attachment; filename="dynpage.csv"' });
 			callback();
 		});
 	});

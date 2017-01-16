@@ -6,6 +6,7 @@
   "dependencies": {
     "async": "latest",
     "csv": "^0.3.6",
+    "iconv": "^2.2.1",
     "total.js": "latest"
   },
   "scripts": {

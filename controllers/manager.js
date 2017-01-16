@@ -1,6 +1,8 @@
 const SITEMAP = {};
 const Fs = require('fs');
 
+var Iconv = require('iconv').Iconv;
+
 exports.install = function() {
 	var url = CONFIG('manager-url');
 	// Auto-localize static HTML templates
@@ -363,6 +365,7 @@ function file_dynpages() {
 // Upload (multiple) pictures
 function upload_dynpages() {
         var csv = require('csv');
+        var iconv = new Iconv('UTF-8', 'ISO-8859-1');
 
 	var self = this;
 	var id = [];
@@ -388,13 +391,13 @@ function upload_dynpages() {
                         //console.log(row[0]);
 
                         GETSCHEMA('Dynpage').make({
-                            id:row[0],
-                            title : row[1],
-                            sitemap : row[2],
-                            url : row[3],
-                            pageId : row[4],
-                            keywords : row[5],
-                            var : ['', row[6], row[7], row[8], row[9]]
+                            id:iconv.decode(row[0]),
+                            title : iconv.decode(row[1]),
+                            sitemap : iconv.decode(row[2]),
+                            url : iconv.decode(row[3]),
+                            pageId : iconv.decode(row[4]),
+                            keywords : iconv.decode(row[5]),
+                            var : ['', iconv.decode(row[6]), iconv.decode(row[7]), iconv.decode(row[8]), iconv.decode(row[9])]
                         }).$save(callback);
                     })
                     .on("end", function (count) {
