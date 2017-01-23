@@ -44,7 +44,7 @@
         </div>
     </div>
 
-    <div data-jc="form" data-title="@(The information to create new page)" data-jc-path="common.form" data-if="value === 'dynpages'" data-width="730px" data-jc-id="dynpages.form" >
+    <div data-jc="form" data-title="@(The information to create new page)" data-jc-path="common.form" data-if="value === 'dynpages'" data-width="930px" data-jc-id="dynpages.form" >
         <div class="padding">
             <fieldset>
                 <legend>Information</legend> <!--Css in manager.css l28 !-->
@@ -282,15 +282,11 @@
                 var loading = FIND('loading').show();
                 var editor = FIND('#dynpages.editor');
 
-                dynpages.form.pictures = editor.getPictures();
-                dynpages.form.body = editor.getContent();
-                dynpages.form.pictures = editor.getPictures();
-                dynpages.form.perex = editor.getPerex();
-                dynpages.form.body = editor.getContent().replace(/\n[\s\t]+\n/g, '\n');
-                dynpages.form.search = editor.getKeywords();
+                //dynpages.form.body = editor.getContent();
+                //dynpages.form.body = editor.getContent().replace(/\n[\s\t]+\n/g, '\n');
+                //dynpages.form.search = editor.getKeywords();
 
                 AJAX('POST {0}/api/dynpages/'.format(managerurl), dynpages.form, function (response) {
-                    console.log("toto");
                     loading.hide(500);
 
                     // Error handling
@@ -374,7 +370,7 @@
                 SET('dynpages.response', null);
                 SET('common.form', 'dynpages');
 
-                console.log(dynpages.form);
+                //console.log(dynpages.form);
 
                 AJAX('GET {0}/api/dynpages/{1}/stats/'.format(managerurl, response.id), 'dynpages.form.stats');
 
@@ -395,7 +391,7 @@
             function dynpages_new() {
                 SET('dynpages.response', null);
             // CMS creates automatically URL when the URL field will contain "---"
-                SET('pages.form', {url: '---'}, true);
+                SET('dynpages.form', {url: '---', var:[]}, true);
             SET('common.form', 'dynpages');
 
 
