@@ -2,7 +2,7 @@
     <div class="container">
 
         <nav class="buttons"><a href="javascript:void(0)" class="csvexport"><i class="fa fa-cloud-download"></i><span>@(Download)</span></a></nav>
-        <nav class="buttons"><a href="javascript:void(0)" class="exec" data-exec="pages_news"><i class="fa fa-plus-circle"></i><span>@(Add page)</span></a></nav>
+        <nav class="buttons"><a href="javascript:void(0)" class="exec" data-exec="dynpages_new"><i class="fa fa-plus-circle"></i><span>@(Add page)</span></a></nav>
 
         <div class="caption"><span class="fa fa-table mr5"></span> @(Dynpages)</div>
         <div class="row">
@@ -44,340 +44,354 @@
         </div>
     </div>
 
-    <!--<div data-jc="handsontable" data-jc-path="dynpages.data" data-jc-id="dynpages_table" data-exec="dynpages_save"></div>-->
-
-    <div data-jc="form" data-title="@(The information to create new page)" data-jc-path="common.form" data-if="value === 'dynpages'" data-width="530px" data-jc-id="dynpages.form" >
+    <div data-jc="form" data-title="@(The information to create new page)" data-jc-path="common.form" data-if="value === 'dynpages'" data-width="730px" data-jc-id="dynpages.form" >
         <div class="padding">
             <fieldset>
                 <legend>Information</legend> <!--Css in manager.css l28 !-->
-
-                <div class="name" data-jc="textbox" data-jc-path="dynpages.form.title" data-required="true" data-placeholder="@(SEO Title)">@(Name)</div>
-                <div class="url" data-jc="textbox" data-jc-path="dynpages.form.url" data-source="dynpages.url" data-empty="" data-source-value="name" data-required="true">@(Url Adress)</div>
-                <div class="id_page" data-jc="textbox" data-jc-path="dynpages.form.pageId" data-source="dynpages.pageID" data-empty="" data-required="true">@(Id Page)</div>
-
-            </fieldset>
-            <br/>
-            <fieldset>
-                <legend>Find us on the Internet</legend>
-
-                <div class="keywords" data-jc="textbox" data-jc-path="dynpages.form.keywords" data-source="dynpages.keywords" data-empty="" data-required="true"><label>@(Keywords)</label></div>
-
-                <div class="sitemap" data-jc="textbox" data-jc-path="dynpages.form.sitemap" data-source="dynpages.sitemap" data-icon="fa-user" data-required="true"><label>@(Sitemap)</label></div>
-
-            </fieldset>
-            <br/>
-            <fieldset>
-                <legend>Variables</legend>
-
                 <div class="row">
-                    <div class="col-md-6 m">
-                        <div class="var" data-jc="textbox" data-jc-path="dynpages.form.var[1]" data-maxlength="40" data-icon="fa-user" data-required="true"><label>@(Var1)</label></div>
-                        <div class="var" data-jc="textbox" data-jc-path="dynpages.form.var[3]" data-maxlength="40" data-icon="fa-user" data-required="true"><label>@(Var3)</label></div>
+                    <div class="col-md-12">
+                        <div class="name" data-jc="textbox" data-jc-path="dynpages.form.title" data-required="true" data-placeholder="@(SEO Title)">@(Name)</div>
+                        <div data-jc="template" data-jc-path="dynpages.form" class="fs11 mt5 silver">
+                            <script type="text/html">
+                                <b>ID:</b> {{ id | default('.....') }}
+                                </script>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-6 m">
-                        <div class="var" data-jc="textbox" data-jc-path="dynpages.form.var[2]" data-maxlength="40" data-icon="fa-user" data-required="true"><label>@(Var2)</label></div>               
-                        <div class="var" data-jc="textbox" data-jc-path="dynpages.form.var[4]" data-maxlength="40" data-icon="fa-user" data-required="true"><label>@(Var4)</label></div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="url" data-jc="textbox" data-jc-path="dynpages.form.url" data-source="dynpages.url" data-empty="" data-source-value="name" data-required="true">@(Url Adress)</div>
+                        </div>                    
                     </div>
-                </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="id_page" data-jc="textbox" data-jc-path="dynpages.form.pageId" data-source="dynpages.pageID" data-empty="" data-required="true">@(Id Page)</div>
+                        </div>
+                    </div>
+                </fieldset>
+                <br/>
+                <fieldset>
+                    <legend>Find us on the Internet</legend>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="keywords" data-jc="textbox" data-jc-path="dynpages.form.keywords" data-source="dynpages.keywords" data-empty="" data-required="true"><label>@(Keywords)</label></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="sitemap" data-jc="textbox" data-jc-path="dynpages.form.sitemap" data-source="dynpages.sitemap" data-icon="fa-user" data-required="true"><label>@(Sitemap)</label></div>
+                        </div>
+                    </div>
+                </fieldset>
+                <br/>
+                <fieldset>
+                    <legend>Variables</legend>
 
-            </fieldset>
+                    <div class="row">
+                        <div class="col-md-6 m">
+                            <div class="var" data-jc="textbox" data-jc-path="dynpages.form.var[1]" data-maxlength="40" data-icon="fa-user" ><label>@(Var1)</label></div>
+                            <div class="var" data-jc="textbox" data-jc-path="dynpages.form.var[3]" data-maxlength="40" data-icon="fa-user" ><label>@(Var3)</label></div>
+                        </div>
+                        <div class="col-md-6 m">
+                            <div class="var" data-jc="textbox" data-jc-path="dynpages.form.var[2]" data-maxlength="40" data-icon="fa-user" ><label>@(Var2)</label></div>               
+                            <div class="var" data-jc="textbox" data-jc-path="dynpages.form.var[4]" data-maxlength="40" data-icon="fa-user" ><label>@(Var4)</label></div>
+                        </div>
+                    </div>
 
-        </div>
+                </fieldset>
 
-        <div data-jc="window" data-jc-path="dynpages.html" data-width="1100px" data-if="value === 'html'" data-jc-id="dynpages.form">
-            <div class="ui-form-buttons">
+            </div>
+
+            <div data-jc="window" data-jc-path="dynpages.html" data-width="1100px" data-if="value === 'html'" data-jc-id="dynpages.form">
+                <div class="ui-form-buttons">
                     <div data-jc="validation" data-jc-path="dynpages.form">
                         <button name="submit">@(SUBMIT)</button>
                     </div>
-                        <button name="cancel">@(Cancel)</button>
-            </div>   
-        </div>
+                    <button name="cancel">@(Cancel)</button>
+                </div>   
+            </div>
 
-    </div> 
-    
-    <script>
+        </div> 
 
-        var dynpages = {};
-        dynpages.filter = {};
-        dynpages.filter.page = 1;
-        dynpages.grid = {};
-        dynpages.form = {
-            var:[]
-        };
-        dynpages.categories = [];
-        dynpages.templates = [];
-        dynpages.response = null;
-        dynpages.category = {};
-        dynpages.subcategory = {};
-        dynpages.subcategory.visible = false;
+        <script>
 
-        /*var dynpages = {};
-         dynpages.filter = {};
-         dynpages.filter.page = 1;
-         
-         dynpages.data = [
-         {title: "title", sitemap: "title", url: "/"}
-         ];*/
-
-        $('.csvexport').attr('href', '{0}/api/dynpages/export/'.format(managerurl));
-        $('.upload_dynpages').attr('data-url', '{0}/api/dynpages/upload/'.format(managerurl));
-
-        /*COMPONENT('handsontable', function () {
-         var self = this;
-         var hot;
-         
-         self.make = function () {
-         var builder = [];
-         var attrs = [];
-         var loading = FIND('loading').show();
-         
-         var save = document.getElementById('save');
-         
-         attrs.attr('id', self.attr('data-jc-id'));
-         
-         var exec = self.attr('data-exec');
-         
-         builder.push('<nav class="buttons">');
-         //builder.push('<a href="javascript:void(0)" class="exec" data-exec="{0}"><i class="fa fa-plus-circle green"></i><span>@(Save)</span></a>'.format(exec));
-         builder.push('</nav>',
-         '<div class="row">',
-         '<div class="col-md-12">');
-         builder.push('<div class="handsontable1" {0} ></div>'.format(attrs.join(' ')));
-         builder.push('</div></div>');
-         
-         self.html(builder.join(''));
-         
-         var container = self.find('.handsontable1');
-         hot = new Handsontable(container[0], {
-         data: dynpages.data,
-         colWidths: [100, 100, 100, 100, 50, 100, 100, 100, 100, 100, 100, 100],
-         rowHeaders: true,
-         manualColumnResize: true,
-         height: 500,
-         contextMenu: ['row_above', 'row_below', 'remove_row'],
-         colHeaders: ["title", "sitemap", "url", "keywords", "langue", "menu", "parent menu", "default page", "var1", "var2", "var3", "var4"],
-         minSpareRows: 1,
-         columns: [
-         {'data': "title"},
-         {'data': "sitemap"},
-         {'data': "url"},
-         {'data': "keywords"},
-         {'data': "language"},
-         {'data': "navigations"},
-         {'data': "parent"},
-         {'data': "pageId"},
-         {'data': "var.1"},
-         {'data': "var.2"},
-         {'data': "var.3"},
-         {'data': "var.4"}
-         ],
-         afterChange: function (data, source) {
-         //console.log(source, data);
-         //console.log(dynpages.data);
-         if (source !== "edit" && source !== 'autofill')
-         return;
-         
-         for (var i = 0, len = data.length; i < len; i++) {
-         //if (dynpages.data[data[i][0]].id) //update id
-         //    dynpage_edit(dynpages.data[data[i][0]])
-         //else //create new line
-         dynpage_save(data[i][0]);
-         }
-         },
-         beforeRemoveRow: function (index, amount, logicalRows) {
-         //console.log(index, amount, logicalRows);
-         for (var i = 0; i < logicalRows.length; i++)
-         dynpage_remove(dynpages.data[i].id);
-         }
-         });
-         
-         Handsontable.Dom.addEvent(save, 'click', function () {
-         // save all cell's data
-         
-         AJAX('PUT {0}/api/dynpages/'.format(managerurl), hot.getSourceData(), function (response) {
-         
-         loading.hide(500);
-         
-         // Error prevention
-         if (response instanceof Array && response.length && response[0].error) {
-         FIND('message').warning(response[0].error);
-         return;
-         }
-         
-         hot.loadData(response.items);
-         
-         success();
-         });
-         
-         });
-         
-         dynpages_refresh(true);
-         
-         };
-         
-         self.update = function (data) {
-         //console.log(data);
-         hot.loadData(data.items);
-         };
-         
-         });*/
-
-        ON('#dynpages.grid', function (component) {
-
-            // Max items per page
-            dynpages.filter.max = component.max;
-            dynpages_refresh_codelists();
-            dynpages_refresh(true);
-
-            component.click = function (index, row, button) {
-                switch ($(button).attr('name')) {
-                    case 'edit':
-                        dynpages_edit(row.id);
-                        break;
-                    case 'remove':
-                        FIND('confirm').confirm('@(Do you want to remove) <b>{0}</b>?'.format(row.name), ['@(OK)', '@(Cancel)'], function (index) {
-                            if (index)
-                                return;
-                            var loading = FIND('loading');
-                            AJAX('DELETE {0}/api/dynpages/'.format(managerurl), {id: row.id}, function () {
-                                loading.hide(500);
-                                dynpages_refresh();
-                            });
-                        });
-                        break;
-                }
+            var dynpages = {};
+            dynpages.filter = {};
+            dynpages.filter.page = 1;
+            dynpages.grid = {};
+            dynpages.form = {
+                var : []
             };
-        });
+            dynpages.categories = [];
+            dynpages.templates = [];
+            dynpages.response = null;
+            dynpages.category = {};
+            dynpages.subcategory = {};
+            dynpages.subcategory.visible = false;
 
-        // Watch for changes in dynpages filter
-        WATCH('dynpages.filter.*', function (path, value) {
-            !NOTMODIFIED('dynpages.filter', dynpages.filter) && dynpages_refresh(path !== 'dynpages.filter.page');
-        });
+            /*var dynpages = {};
+             dynpages.filter = {};
+             dynpages.filter.page = 1;
+         
+             dynpages.data = [
+             {title: "title", sitemap: "title", url: "/"}
+             ];*/
 
-        ON('#dynpages.form', function (component) {
-            component.submit = function (hide) {
+            $('.csvexport').attr('href', '{0}/api/dynpages/export/'.format(managerurl));
+            $('.upload_dynpages').attr('data-url', '{0}/api/dynpages/upload/'.format(managerurl));
+
+            /*COMPONENT('handsontable', function () {
+             var self = this;
+             var hot;
+         
+             self.make = function () {
+             var builder = [];
+             var attrs = [];
+             var loading = FIND('loading').show();
+         
+             var save = document.getElementById('save');
+         
+             attrs.attr('id', self.attr('data-jc-id'));
+         
+             var exec = self.attr('data-exec');
+         
+             builder.push('<nav class="buttons">');
+             //builder.push('<a href="javascript:void(0)" class="exec" data-exec="{0}"><i class="fa fa-plus-circle green"></i><span>@(Save)</span></a>'.format(exec));
+             builder.push('</nav>',
+             '<div class="row">',
+             '<div class="col-md-12">');
+             builder.push('<div class="handsontable1" {0} ></div>'.format(attrs.join(' ')));
+             builder.push('</div></div>');
+         
+             self.html(builder.join(''));
+         
+             var container = self.find('.handsontable1');
+             hot = new Handsontable(container[0], {
+             data: dynpages.data,
+             colWidths: [100, 100, 100, 100, 50, 100, 100, 100, 100, 100, 100, 100],
+             rowHeaders: true,
+             manualColumnResize: true,
+             height: 500,
+             contextMenu: ['row_above', 'row_below', 'remove_row'],
+             colHeaders: ["title", "sitemap", "url", "keywords", "langue", "menu", "parent menu", "default page", "var1", "var2", "var3", "var4"],
+             minSpareRows: 1,
+             columns: [
+             {'data': "title"},
+             {'data': "sitemap"},
+             {'data': "url"},
+             {'data': "keywords"},
+             {'data': "language"},
+             {'data': "navigations"},
+             {'data': "parent"},
+             {'data': "pageId"},
+             {'data': "var.1"},
+             {'data': "var.2"},
+             {'data': "var.3"},
+             {'data': "var.4"}
+             ],
+             afterChange: function (data, source) {
+             //console.log(source, data);
+             //console.log(dynpages.data);
+             if (source !== "edit" && source !== 'autofill')
+             return;
+         
+             for (var i = 0, len = data.length; i < len; i++) {
+             //if (dynpages.data[data[i][0]].id) //update id
+             //    dynpage_edit(dynpages.data[data[i][0]])
+             //else //create new line
+             dynpage_save(data[i][0]);
+             }
+             },
+             beforeRemoveRow: function (index, amount, logicalRows) {
+             //console.log(index, amount, logicalRows);
+             for (var i = 0; i < logicalRows.length; i++)
+             dynpage_remove(dynpages.data[i].id);
+             }
+             });
+         
+             Handsontable.Dom.addEvent(save, 'click', function () {
+             // save all cell's data
+         
+             AJAX('PUT {0}/api/dynpages/'.format(managerurl), hot.getSourceData(), function (response) {
+         
+             loading.hide(500);
+         
+             // Error prevention
+             if (response instanceof Array && response.length && response[0].error) {
+             FIND('message').warning(response[0].error);
+             return;
+             }
+         
+             hot.loadData(response.items);
+         
+             success();
+             });
+         
+             });
+         
+             dynpages_refresh(true);
+         
+             };
+         
+             self.update = function (data) {
+             //console.log(data);
+             hot.loadData(data.items);
+             };
+         
+             });*/
+
+            ON('#dynpages.grid', function (component) {
+
+                // Max items per page
+                dynpages.filter.max = component.max;
+                dynpages_refresh_codelists();
+                dynpages_refresh(true);
+
+                component.click = function (index, row, button) {
+                    switch ($(button).attr('name')) {
+                        case 'edit':
+                            dynpages_edit(row.id);
+                            break;
+                        case 'remove':
+                            FIND('confirm').confirm('@(Do you want to remove) <b>{0}</b>?'.format(row.name), ['@(OK)', '@(Cancel)'], function (index) {
+                                if (index)
+                                    return;
+                                var loading = FIND('loading');
+                                AJAX('DELETE {0}/api/dynpages/'.format(managerurl), {id: row.id}, function () {
+                                    loading.hide(500);
+                                    dynpages_refresh();
+                                });
+                            });
+                            break;
+                    }
+                };
+            });
+
+            // Watch for changes in dynpages filter
+            WATCH('dynpages.filter.*', function (path, value) {
+                !NOTMODIFIED('dynpages.filter', dynpages.filter) && dynpages_refresh(path !== 'dynpages.filter.page');
+            });
+
+            ON('#dynpages.form', function (component) {
+                component.submit = function (hide) {
+                    var loading = FIND('loading').show();
+                    var editor = FIND('#dynpages.editor');
+
+                    dynpages.form.pictures = editor.getPictures();
+                    dynpages.form.body = editor.getContent();
+                    dynpages.form.pictures = editor.getPictures();
+                    dynpages.form.perex = editor.getPerex();
+                    dynpages.form.body = editor.getContent().replace(/\n[\s\t]+\n/g, '\n');
+                    dynpages.form.search = editor.getKeywords();
+
+                    AJAX('POST {0}/api/dynpages/'.format(managerurl), dynpages.form, function (response) {
+                        console.log("toto");
+                        loading.hide(500);
+
+                        // Error handling
+                        SET('dynpages.response', response);
+                        if (response instanceof Array)
+                            return;
+
+                        hide();
+                        dynpages_refresh();
+                        success();
+                    });
+                };
+            });
+
+            function dynpage_remove(id) {
                 var loading = FIND('loading').show();
-                var editor = FIND('#dynpages.editor');
 
-                dynpages.form.pictures = editor.getPictures();
-                dynpages.form.body = editor.getContent();
-                dynpages.form.pictures = editor.getPictures();
-                dynpages.form.perex = editor.getPerex();
-                dynpages.form.body = editor.getContent().replace(/\n[\s\t]+\n/g, '\n');
-                dynpages.form.search = editor.getKeywords();
+                AJAX('DELETE {0}/api/dynpages'.format(managerurl), {id: id}, function (response) {
 
-                AJAX('POST {0}/api/dynpages/'.format(managerurl), dynpages.form, function (response) {
-                    console.log("toto");
                     loading.hide(500);
 
-                    // Error handling
-                    SET('dynpages.response', response);
-                    if (response instanceof Array)
+                    // Error prevention
+                    if (response instanceof Array) {
+                        FIND('message').warning(response[0].error);
                         return;
+                    }
 
-                    hide();
-                    dynpages_refresh();
                     success();
                 });
-            };
-        });
+            }
 
-        function dynpage_remove(id) {
-            var loading = FIND('loading').show();
+            function dynpage_save(idx) {
+                var loading = FIND('loading').show();
 
-            AJAX('DELETE {0}/api/dynpages'.format(managerurl), {id: id}, function (response) {
+                AJAX('POST {0}/api/dynpages/'.format(managerurl), dynpages.data[idx], function (response) {
 
-                loading.hide(500);
+                    loading.hide(500);
 
-                // Error prevention
-                if (response instanceof Array) {
-                    FIND('message').warning(response[0].error);
-                    return;
-                }
+                    // Error prevention
+                    if (response instanceof Array) {
+                        FIND('message').warning(response[0].error);
+                        return;
+                    }
 
-                success();
-            });
-        }
+                    dynpages.data[idx] = response;
 
-        function dynpage_save(idx) {
-            var loading = FIND('loading').show();
+                    success();
+                });
+            }
 
-            AJAX('POST {0}/api/dynpages/'.format(managerurl), dynpages.data[idx], function (response) {
+            // Method refreshes categories
+            function dynpages_refresh_codelists() {
+                AJAX('GET {0}/api/posts/codelists/'.format(managerurl), function (response) {
+                    SET('posts.categories', response.categories);
+                    SET('posts.templates', response.templates);
+                });
+            }
 
-                loading.hide(500);
+            // Method refreshes grid
+            function dynpages_refresh(reset) {
+                if (reset)
+                    dynpages.filter.page = 1;
 
-                // Error prevention
-                if (response instanceof Array) {
-                    FIND('message').warning(response[0].error);
-                    return;
-                }
+                AJAX('GET {0}/api/dynpages/'.format(managerurl), dynpages.filter, 'dynpages.grid');
+            }
 
-                dynpages.data[idx] = response;
+            function dynpages_edit(id) {
+                var loading = FIND('loading').show();
+                AJAX('GET {0}/api/dynpages/{1}/'.format(managerurl, id), function (response) {
 
-                success();
-            });
-        }
+                    loading.hide(500);
 
-        // Method refreshes categories
-        function dynpages_refresh_codelists() {
-            AJAX('GET {0}/api/posts/codelists/'.format(managerurl), function (response) {
-                SET('posts.categories', response.categories);
-                SET('posts.templates', response.templates);
-            });
-        }
+                    // Error prevention
+                    if (response instanceof Array) {
+                        FIND('message').warning(response[0].error);
+                        return;
+                    }
 
-        // Method refreshes grid
-        function dynpages_refresh(reset) {
-            if (reset)
-                dynpages.filter.page = 1;
+                    //FIND('#dynpages.editor').setTemplate(response.template);
+                    SET('dynpages.form', $.extend({$index: index}, response), true);
+                    SET('dynpages.response', null);
+                    SET('common.form', 'dynpages');
 
-            AJAX('GET {0}/api/dynpages/'.format(managerurl), dynpages.filter, 'dynpages.grid');
-        }
+                    console.log(dynpages.form);
 
-        function dynpages_edit(id) {
-            var loading = FIND('loading').show();
-            AJAX('GET {0}/api/dynpages/{1}/'.format(managerurl, id), function (response) {
+                    AJAX('GET {0}/api/dynpages/{1}/stats/'.format(managerurl, response.id), 'dynpages.form.stats');
 
-                loading.hide(500);
+                    // /templates/component-editor.html:
+                    //cmseditor_widgets(false);
+                });
+            }
 
-                // Error prevention
-                if (response instanceof Array) {
-                    FIND('message').warning(response[0].error);
-                    return;
-                }
+            function dynpages_reload() {
+                var hash = location.hash;
 
-                //FIND('#dynpages.editor').setTemplate(response.template);
-                SET('dynpages.form', $.extend({$index: index}, response), true);
+                hash && hash.length > 1 && setTimeout(function () {
+                    dynpages_edit(hash.substring(1));
+                }, 500);
+            }
+
+            //Function button "Add Page"
+            function dynpages_new() {
                 SET('dynpages.response', null);
+                // CMS creates automatically URL when the URL field will contain "---"
+                SET('pages.form', {url: '---'}, true);
                 SET('common.form', 'dynpages');
 
-                console.log(dynpages.form);
-
-                AJAX('GET {0}/api/dynpages/{1}/stats/'.format(managerurl, response.id), 'dynpages.form.stats');
-
-                // /templates/component-editor.html:
-                //cmseditor_widgets(false);
-            });
-        }
-
-        function dynpages_reload() {
-            var hash = location.hash;
-
-            hash && hash.length > 1 && setTimeout(function () {
-                dynpages_edit(hash.substring(1));
-            }, 500);
-        }
-
-        //Function button "Add Page"
-        function pages_news() {
-            SET('manager.response', null);
-            // CMS creates automatically URL when the URL field will contain "---"
-            //FIND('#dynpages.editor').setTemplate(response.template);
-            SET('dynpages.form', {url: '---'}, true);
-            SET('common.form', 'dynpages');
-
-
-        }
-
-
-    </script>
+            }
+        </script>
