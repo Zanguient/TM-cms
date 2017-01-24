@@ -20,6 +20,8 @@ NEWSCHEMA('Settings').make(function(schema) {
 	schema.define('navigations', '[String]');
 	schema.define('languages', '[Lower(2)]');
 	schema.define('users', '[SuperUser]');
+        schema.define('title', 'String(30)'); // Site Name for SEO
+        schema.define('logo', 'String(30)'); // Logo filename
 
 	// Saves settings into the file
 	schema.setSave(function(error, model, options, callback) {
@@ -79,6 +81,10 @@ NEWSCHEMA('Settings').make(function(schema) {
 			// Rewrites internal framework settings
 			F.config['mail.address.from'] = F.config.custom.emailsender;
 			F.config['mail.address.reply'] = F.config.custom.emailreply;
+                        
+                        // Rename the TITLE for SEO
+                        if(settings.title)
+                            F.config['name'] = settings.title;
 
 			if (!F.config.custom.languages)
 				F.config.custom.languages = [];

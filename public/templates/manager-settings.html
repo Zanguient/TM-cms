@@ -7,6 +7,16 @@
 <div class="container">
     <div class="row">
         <div class="col-md-3 col-sm-3 m">
+            <div data-jc="textbox" data-jc-path="settings.form.title" data-required="true">@(Site name)</div>
+            <div class="help">@(It's used for logo SEO.)</div>
+        </div>
+        <div class="col-md-3 col-sm-3 m">
+            <a href="javascript:void(0)" data-jc="fileupload" data-jc-path="settings.form.logo" data-url="/$manager/upload-logo/"><i class="fa fa-cloud-upload"></i><span>@(Upload) Logo</span></a>
+            <div class="help">@(Select one picture wich will change the logo on the home screen)</div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3 col-sm-3 m">
             <div data-jc="textbox" data-jc-path="settings.form.url" data-required="true">@(URL address)</div>
             <div class="help">@(It's used in payments and email messages.)</div>
         </div>
@@ -18,14 +28,6 @@
         </div>
         <div class="col-md-3 col-sm-3 m">
             <div data-jc="textbox" data-jc-path="settings.form.emailsender" data-required="true" data-jc-type="email">@(Email for sending)</div>
-        </div>
-
-        <div class="col-md-3 col-sm-3 m">
-            <a href="javascript:void(0)" data-jc="fileupload" data-jc-path="mypicture" data-url="/my-upload-url/"><i class="fa fa-cloud-upload"></i><span>@(Upload)</span></a>
-            <div class="help">@(Select one picture wich will change the logo on the home screen)</div>
-            <script>
-                 var mypicture = '/my-upload-url/';               
-            </script>
         </div>
     </div>
 </div>

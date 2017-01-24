@@ -13,6 +13,7 @@ exports.install = function() {
 	F.route(url + '/*', '~manager');
 	F.route(url + '/upload/',                  upload, ['post', 'upload', 10000], 3084); // 3 MB
 	F.route(url + '/upload/base64/',           upload_base64, ['post', 10000], 2048); // 2 MB
+        F.route(url + '/upload-logo/',             upload_logo, ['post', 'upload', 10000], 3084); // 3 MB
 	F.route(url + '/logoff/',                  redirect_logoff);
 
 	// DASHBOARD
@@ -123,6 +124,31 @@ function upload_base64() {
 	var id = DB('files').binary.insert('base64' + ext, data);
 	self.json('/download/' + id + ext);
 }
+
+// Upload new Logo
+function upload_logo() {
+
+	var self = this;
+	var id = {};
+
+	self.files.wait(function(file, next) {
+            if(!file.isImage())
+                return self.throw500("Not image");
+            
+            var filename = F.path.public('img/logo.png');
+            
+            var image = file.image();
+            image.minify();
+            
+            image.resizeCenter(490, 140).save(filename, function(err){
+                id.name = U.getName(filename);
+                
+                setTimeout(next, 100);
+            });
+
+	}, () => self.json(id));
+}
+
 
 // Logoff
 function redirect_logoff() {
