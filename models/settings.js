@@ -21,7 +21,7 @@ NEWSCHEMA('Settings').make(function(schema) {
 	schema.define('languages', '[Lower(2)]');
 	schema.define('users', '[SuperUser]');
         schema.define('title', 'String(30)'); // Site Name for SEO
-        schema.define('logo', 'String(30)'); // Logo filename
+        schema.define('author', 'String(30)'); // Author for SEO
 
 	// Saves settings into the file
 	schema.setSave(function(error, model, options, callback) {
@@ -85,6 +85,9 @@ NEWSCHEMA('Settings').make(function(schema) {
                         // Rename the TITLE for SEO
                         if(settings.title)
                             F.config['name'] = settings.title;
+                        if(settings.author)
+                            F.config['author'] = settings.author;
+                        
 
 			if (!F.config.custom.languages)
 				F.config.custom.languages = [];
