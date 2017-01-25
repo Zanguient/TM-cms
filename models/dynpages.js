@@ -152,7 +152,7 @@ NEWSCHEMA('Dynpage').make(function (schema) {
     
     // Performs download
 	schema.addWorkflow('download', function(error, model, controller, callback) {
-            var iconv = new Iconv('UTF-8', 'ISO-8859-1//TRANSLIT');
+            var iconv = new Iconv('UTF-8', 'ISO-8859-1//TRANSLIT//IGNORE');
             
 		NOSQL('dynpages')
                         .find()
