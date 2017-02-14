@@ -503,6 +503,7 @@
 		if (reset)
 			pages.filter.page = 1;
 		AJAX('GET {0}/api/pages/'.format(managerurl), pages.filter, function(response) {
+                    //console.log(response);
 			pages.filter.navigation && response.items.sort(function(a, b) {
 				return a.priority > b.priority ? -1 : a.priority === b.priority ? 0 : 1;
 			});
