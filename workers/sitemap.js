@@ -27,7 +27,7 @@ function createXML() {
     // Many items
     //write(hostname + '/', lastmod, '1.0000', 'weekly');
     //console.log(options.sitemap);
-
+var i=0;
     Object.keys(options.sitemap).forEach(function (key) {
         var arr = options.sitemap[key];
 
@@ -45,6 +45,7 @@ function createXML() {
         //value.first   // is the first item?
         //value.index   // current item index in sitemap (in the parent tree)
         //}
+        console.log(i++);
     });
 
     // Complete
